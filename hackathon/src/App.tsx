@@ -1,5 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import Register from './pages/register';
+import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import GastosSummary from './pages/gastos';
 import { useState } from 'react'
@@ -11,6 +12,7 @@ function App() {
       <Routes>
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
+          <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/gastos" element={<GastosSummary />} />
         {/* Rutas protegidas u otras páginas */}
       </Routes>

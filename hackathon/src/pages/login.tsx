@@ -23,7 +23,7 @@ export default function Login() {
       const token = res.data.result.token;
       login(token);
       alert("Inicio de sesión exitoso");
-      navigate("/");
+      navigate("/dashboard");
     } catch (err) {
       setError("Error al iniciar sesión. Verifica tu correo y contraseña.");
     }
