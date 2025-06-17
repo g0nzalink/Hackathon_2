@@ -19,7 +19,7 @@ export default function Dashboard() {
         </button>
 
         <button
-          onClick={() => navigate("/nuevo")}
+          onClick={() => navigate("/registrar_gastos")}
           className="bg-green-500 text-white px-4 py-2 rounded"
         >
           Registrar nuevo gasto

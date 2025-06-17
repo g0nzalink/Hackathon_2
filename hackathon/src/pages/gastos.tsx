@@ -1,9 +1,18 @@
 /// <reference types="vite/client" />
-
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://198.211.105.95:8080';
+
+interface RawExpense {
+  expenseCategory: {
+    id: number;
+    name: string;
+  };
+  year: number;
+  month: number;
+  amount: number;
+}
 
 interface ExpenseSummary {
   category: string;
@@ -12,7 +21,6 @@ interface ExpenseSummary {
 
 const GastosSummary: React.FC = () => {
   const [month, setMonth] = useState<string>(() => {
-    // Inicializa con mes actual en formato YYYY-MM
     const now = new Date();
     return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
   });
@@ -28,14 +36,24 @@ const GastosSummary: React.FC = () => {
       const token = localStorage.getItem('jwt_token');
       if (!token) throw new Error('No se encontró token de autenticación.');
 
-      const response = await axios.get<ExpenseSummary[]>(
-        `${API_URL}/expenses_summary`,
-        {
-          headers: { Authorization: `Bearer ${token}` },
-          params: { month: selectedMonth }
-        }
-      );
-      setData(response.data);
+      const [year, monthStr] = selectedMonth.split('-');
+      const response = await axios.get<RawExpense[]>(`${API_URL}/expenses_summary`, {
+        headers: { Authorization: `Bearer ${token}` },
+        params: { year, month: monthStr }
+      });
+
+      const grouped: Record<string, number> = {};
+      for (const item of response.data) {
+        const cat = item.expenseCategory.name;
+        grouped[cat] = (grouped[cat] || 0) + item.amount;
+      }
+
+      const summary = Object.entries(grouped).map(([category, total]) => ({
+        category,
+        total
+      }));
+
+      setData(summary);
     } catch (err: any) {
       if (err.response) {
         setError(`Error ${err.response.status}: ${err.response.data}`);
@@ -83,12 +101,14 @@ const GastosSummary: React.FC = () => {
               {data.map(item => (
                 <tr key={item.category} className="border-b">
                   <td className="px-4 py-2">{item.category}</td>
-                  <td className="px-4 py-2 text-right">${item.total.toLocaleString()}</td>
+                  <td className="px-4 py-2 text-right">${item.total.toFixed(2)}</td>
                 </tr>
               ))}
               {data.length === 0 && (
                 <tr>
-                  <td colSpan={2} className="px-4 py-2 text-center text-gray-500">No hay datos para este mes.</td>
+                  <td colSpan={2} className="px-4 py-2 text-center text-gray-500">
+                    No hay datos para este mes.
+                  </td>
                 </tr>
               )}
             </tbody>
