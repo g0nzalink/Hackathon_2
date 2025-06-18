@@ -78,6 +78,7 @@ const NuevoGasto: React.FC = () => {
   return (
     <div className="p-6 mid-screen">
       <div className="max-w-md mx-auto bg-neutral-900 shadow-md rounded-2xl p-8">
+        <button onClick={() => navigate("/dashboard")} className="mb-4 text-white">&larr; Volver</button>
         <h2 className="text-2xl font-bold mb-6 text-center">Registrar Nuevo Gasto</h2>
 
         {error && <p className="text-red-600 mb-4 text-center">{error}</p>}

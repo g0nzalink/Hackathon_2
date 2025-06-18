@@ -69,7 +69,7 @@ const GastosDetail: React.FC = () => {
   return (
     <div className="p-6 min-h-screen">
       <div className="max-w-3xl mx-auto bg-neutral-900 shadow-md rounded-2xl p-8">
-        <button onClick={() => navigate(-1)} className="mb-4 text-white">&larr; Volver</button>
+        <button onClick={() => navigate("/dashboard")} className="mb-4 text-white">&larr; Volver</button>
         <h2 className="text-2xl font-bold mb-4 text-center">Detalle de Gastos</h2>
 
         {loading ? (
