@@ -105,9 +105,9 @@ const NuevoGasto: React.FC = () => {
               required
               className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
             >
-              <option value="">Selecciona una categoría</option>
+              <option className="text-white bg-neutral-800" value="">Selecciona una categoría</option>
               {categories.map(cat => (
-                <option key={cat.id} value={cat.id}>
+                <option className="text-white bg-neutral-800" key={cat.id} value={cat.id}>
                   {cat.name}
                 </option>
               ))}
