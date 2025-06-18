@@ -30,7 +30,7 @@ export default function Login() {
   };
 
   return (
-    <form onSubmit={handleLogin} className="p-6 max-w-md mx-auto flex flex-col gap-4">
+    <form onSubmit={handleLogin} className="bg-black p-6 max-w-md mx-auto flex flex-col gap-4 rounded-2xl">
       <h2 className="text-xl font-bold">Iniciar sesión</h2>
       <input
         type="email"

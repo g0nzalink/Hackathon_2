@@ -27,7 +27,7 @@ export default function Dashboard() {
       </div>
 
       <button
-        onClick={logout}
+        onClick={() => {navigate(-1); logout}}
         className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
       >
         Cerrar sesión
