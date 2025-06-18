@@ -10,11 +10,7 @@ interface Category {
   name: string;
 }
 
-interface CategoriasProps {
-  onSelect?: (categoryId: number) => void;
-}
-
-const Categorias: React.FC<CategoriasProps> = ({ onSelect }) => {
+const Categorias: React.FC = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
@@ -25,18 +21,15 @@ const Categorias: React.FC<CategoriasProps> = ({ onSelect }) => {
       setError(null);
       try {
         const token = localStorage.getItem('jwt_token');
-        if (!token) throw new Error('No se encontró token de autenticación.');
+        if (!token) throw new Error('No autenticado');
 
         const response = await axios.get<Category[]>(
           `${API_URL}/expenses_category`,
-          {
-            headers: { Authorization: `Bearer ${token}` }
-          }
+          { headers: { Authorization: `Bearer ${token}` } }
         );
         setCategories(response.data);
       } catch (err: any) {
-        if (err.response) setError(`Error ${err.response.status}`);
-        else setError(err.message);
+        setError(err.response ? `Error ${err.response.status}` : err.message);
       } finally {
         setLoading(false);
       }
@@ -48,20 +41,16 @@ const Categorias: React.FC<CategoriasProps> = ({ onSelect }) => {
   if (error) return <p className="text-center text-red-600">{error}</p>;
 
   return (
-    <div className="max-w-md mx-auto">
-      <label htmlFor="category" className="block mb-2 font-medium">Categoría:</label>
-      <select
-        id="category"
-        className="w-full border border-gray-300 rounded-lg p-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-        onChange={e => onSelect && onSelect(Number(e.target.value))}
-      >
-        <option value="">Selecciona una categoría</option>
+    <div className="p-6 max-w-md mx-auto bg-white shadow-md rounded-2xl">
+      <h2 className="text-xl font-bold mb-4 text-center">Categorías Disponibles</h2>
+      <ul className="space-y-2">
         {categories.map(cat => (
-          <option key={cat.id} value={cat.id}>
-            {cat.name}
-          </option>
+          <li key={cat.id} className="flex justify-between border p-3 rounded-lg">
+            <span className="font-medium">{cat.name}</span>
+            <span className="text-sm text-gray-600">ID: {cat.id}</span>
+          </li>
         ))}
-      </select>
+      </ul>
     </div>
   );
 };

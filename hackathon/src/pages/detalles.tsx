@@ -53,6 +53,19 @@ const GastosDetail: React.FC = () => {
     fetchDetails();
   }, [year, month, categoryId]);
 
+  const handleDelete = async (id: number) => {
+    if (!window.confirm('¿Confirmar eliminación de este gasto?')) return;
+    try {
+      const token = localStorage.getItem('jwt_token');
+      await axios.delete(`${API_URL}/expenses/${id}`, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      setItems(prev => prev.filter(item => item.id !== id));
+    } catch (error) {
+      alert('Error al eliminar el gasto.');
+    }
+  };
+
   return (
     <div className="p-6 min-h-screen">
       <div className="max-w-3xl mx-auto bg-neutral-900 shadow-md rounded-2xl p-8">
@@ -68,7 +81,7 @@ const GastosDetail: React.FC = () => {
         ) : (
           <ul className="space-y-4">
             {items.map(item => (
-              <li key={item.id} className="border p-4 rounded-lg flex justify-between items-center">
+              <li key={item.id} className="border p-4 rounded-lg flex space-x-6 items-center">
                 <div>
                   <p className="font-medium">ID: {item.id}</p>
                   {item.description && <p className="text-sm">{item.description}</p>}
@@ -76,6 +89,12 @@ const GastosDetail: React.FC = () => {
                 <div className="text-right">
                   <p className="font-semibold">${item.amount.toFixed(2)}</p>
                   {item.date && <p className="text-xs text-gray-500">{new Date(item.date).toLocaleDateString()}</p>}
+                </div>
+                <div className="flex items-center space-x-4">
+                  <button
+                    onClick={() => handleDelete(item.id)}
+                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
+                  >Eliminar</button>
                 </div>
               </li>
             ))}

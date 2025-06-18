@@ -6,6 +6,7 @@ import GastosDetail from './pages/detalles';
 import GastosSummary from './pages/gastos';
 import Resumen from './components/resumen';
 import NuevoGasto from './pages/registar_gastos';
+import Categorias from './pages/categorias';
 import { useState } from 'react'
 import './App.css'
 
@@ -20,6 +21,7 @@ function App() {
         <Route path="/detalle/:year/:month/:categoryId" element={<GastosDetail />} />
         <Route path="/registrar_gastos" element={<NuevoGasto />} />
         <Route path="/resumen" element={<Resumen />} />
+        <Route path="/categorias" element={<Categorias />} />
         {/* Rutas protegidas u otras páginas */}
       </Routes>
     </BrowserRouter>

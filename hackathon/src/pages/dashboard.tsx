@@ -25,13 +25,20 @@ export default function Dashboard() {
           Registrar nuevo gasto
         </button>
       </div>
-
-      <button
+      <div className="space-x-4">
+        <button
         onClick={() => {navigate("/login"); logout}}
-        className="mt-4 bg-red-500 text-white px-4 py-2 rounded"
-      >
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
         Cerrar sesión
-      </button>
+        </button>
+        <button
+        onClick={() => navigate("/categorias")}
+        className="mt-4 bg-red-500 text-white px-4 py-2 rounded">
+            Categorias de gastos
+        </button>
+      </div>
+
+
     </div>
   );
 }
