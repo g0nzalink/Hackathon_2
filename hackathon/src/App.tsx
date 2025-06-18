@@ -4,6 +4,8 @@ import Dashboard from './pages/dashboard';
 import Login from './pages/login';
 import GastosDetail from './pages/detalles';
 import GastosSummary from './pages/gastos';
+import Resumen from './components/resumen';
+import NuevoGasto from './pages/registar_gastos';
 import { useState } from 'react'
 import './App.css'
 
@@ -16,6 +18,8 @@ function App() {
         <Route path="/dashboard" element={<Dashboard />} />
         <Route path="/gastos" element={<GastosSummary />} />
         <Route path="/detalle/:year/:month/:categoryId" element={<GastosDetail />} />
+        <Route path="/registrar_gastos" element={<NuevoGasto />} />
+        <Route path="/resumen" element={<Resumen />} />
         {/* Rutas protegidas u otras páginas */}
       </Routes>
     </BrowserRouter>
