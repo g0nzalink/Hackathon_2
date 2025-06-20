@@ -2,6 +2,9 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useParams, useNavigate } from 'react-router-dom';
+import { BackButton } from '../components/ui/BackButton';
+import { Button } from '../components/ui/Button';
+
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://198.211.105.95:8080';
 
@@ -69,7 +72,7 @@ const GastosDetail: React.FC = () => {
   return (
     <div className="p-6 min-h-screen">
       <div className="max-w-3xl mx-auto bg-neutral-900 shadow-md rounded-2xl p-8">
-        <button onClick={() => navigate("/dashboard")} className="mb-4 text-white">&larr; Volver</button>
+        <BackButton to="/dashboard" />
         <h2 className="text-2xl font-bold mb-4 text-center">Detalle de Gastos</h2>
 
         {loading ? (
@@ -91,10 +94,9 @@ const GastosDetail: React.FC = () => {
                   {item.date && <p className="text-xs text-gray-500">{new Date(item.date).toLocaleDateString()}</p>}
                 </div>
                 <div className="flex items-center space-x-4">
-                  <button
-                    onClick={() => handleDelete(item.id)}
-                    className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded"
-                  >Eliminar</button>
+                  <Button variant="danger" onClick={() => handleDelete(item.id)}>
+                    Eliminar
+                  </Button>
                 </div>
               </li>
             ))}

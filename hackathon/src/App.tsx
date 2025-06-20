@@ -7,7 +7,6 @@ import GastosSummary from './pages/gastos';
 import Resumen from './components/resumen';
 import NuevoGasto from './pages/registar_gastos';
 import Categorias from './pages/categorias';
-import { useState } from 'react'
 import './App.css'
 
 function App() {

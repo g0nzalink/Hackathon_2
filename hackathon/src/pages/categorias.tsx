@@ -2,7 +2,10 @@
 
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+
 import { useNavigate } from 'react-router-dom';
+import { BackButton } from '../components/ui/BackButton';
+import { CategoryItem } from '../components/CategoryItem';
 
 const API_URL = import.meta.env.VITE_API_URL || 'http://198.211.105.95:8080';
 
@@ -44,14 +47,11 @@ const Categorias: React.FC = () => {
 
   return (
     <div className="p-6 max-w-md mx-auto bg-neutral-800 shadow-md rounded-2xl">
-      <button onClick={() => navigate("/dashboard")} className="mb-4 text-white">&larr; Volver</button>
+      <BackButton to="/dashboard" /> 
       <h2 className="text-xl font-bold mb-4 text-center">Categorías Disponibles</h2>
       <ul className="space-y-2">
         {categories.map(cat => (
-          <li key={cat.id} className="flex justify-between border p-3 rounded-lg">
-            <span className="font-medium">{cat.name}</span>
-            <span className="text-sm text-gray-300">ID: {cat.id}</span>
-          </li>
+          <CategoryItem key={cat.id} id={cat.id} name={cat.name} />
         ))}
       </ul>
     </div>
